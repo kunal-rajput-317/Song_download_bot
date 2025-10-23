@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feel the Music - Free Music Downloads</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #4a148c 0%, #1a237e 50%, #311b92 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            color: #ba68c8;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #ba68c8, #64b5f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .ad-banner {
+            background: rgba(31, 31, 31, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid #424242;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .ad-label {
+            color: #9e9e9e;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .ad-placeholder {
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #757575;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .sidebar-ad {
+            background: rgba(31, 31, 31, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid #424242;
+            border-radius: 8px;
+            padding: 1rem;
+            position: sticky;
+            top: 1rem;
+        }
+
+        .sidebar-ad-content {
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #757575;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .main-content {
+            grid-column: 2;
+        }
+
+        .song-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .song-info {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .album-art {
+            width: 128px;
+            height: 128px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #9c27b0, #2196f3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .album-art svg {
+            width: 64px;
+            height: 64px;
+        }
+
+        .song-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .artist-name {
+            font-size: 1.25rem;
+            color: #ba68c8;
+            margin-bottom: 0.5rem;
+        }
+
+        .song-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            color: #bdbdbd;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .action-btn.liked {
+            background: #f44336;
+        }
+
+        .share-options {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .share-options.active {
+            display: block;
+        }
+
+        .share-options p {
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-btn {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .share-btn.telegram { background: #0088cc; }
+        .share-btn.whatsapp { background: #25d366; }
+        .share-btn.copy { background: #9c27b0; }
+
+        .share-btn:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(to right, #9c27b0, #2196f3);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 1.125rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(156, 39, 176, 0.3);
+        }
+
+        .download-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+
+        .download-btn:disabled {
+            background: linear-gradient(to right, #757575, #616161);
+            cursor: not-allowed;
+        }
+
+        .download-btn.success {
+            background: #4caf50;
+        }
+
+        .download-info {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #bdbdbd;
+        }
+
+        .tabs {
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 0.75rem;
+            background: none;
+            border: none;
+            color: #bdbdbd;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab.active {
+            background: #9c27b0;
+            color: white;
+        }
+
+        .tab-content {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        .tab-content h3 {
+            color: #ba68c8;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        .tab-content ul, .tab-content ol {
+            color: #bdbdbd;
+            padding-left: 1rem;
+        }
+
+        .tab-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        .trending-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .trending-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .trending-icon {
+            color: #ba68c8;
+        }
+
+        .trending-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .trending-item:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .trending-art {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #9c27b0, #2196f3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .trending-art svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .trending-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .trending-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .bottom-ad {
+            background: rgba(31, 31, 31, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid #424242;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .bottom-ad-content {
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #757575;
+        }
+
+        footer {
+            margin-top: 3rem;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 0;
+            text-align: center;
+            color: #9e9e9e;
+            font-size: 0.875rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-ad {
+                display: none;
+            }
+
+            .main-content {
+                grid-column: 1;
+            }
+
+            .search-btn span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                </svg>
+                <span class="logo-text">Feel the Music</span>
+            </div>
+            <div class="header-right">
+                <button class="search-btn">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <span>Search More</span>
+                </button>
+                <div>Free Downloads</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Top Ad -->
+        <div class="ad-banner">
+            <p class="ad-label">Advertisement</p>
+            <div class="ad-placeholder">728 x 90 Banner Ad Space</div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Left Sidebar Ad -->
+            <div class="sidebar-ad">
+                <p class="ad-label">Advertisement</p>
+                <div class="sidebar-ad-content">300 x 600<br>Sidebar Ad</div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="song-card">
+                    <div class="song-info">
+                        <div class="album-art">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                        </div>
+
+                        <h2 class="song-title" id="songTitle">Amazing Song</h2>
+                        <p class="artist-name" id="artistName">Artist Name</p>
+                        <div class="song-meta">
+                            <span>
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: inline; vertical-align: middle;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span id="duration">3:45</span>
+                            </span>
+                            <span>•</span>
+                            <span id="album">Single</span>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="action-btn" id="likeBtn">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                                <span id="likeText">Like</span>
+                            </button>
+                            <button class="action-btn" id="shareBtn">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                                </svg>
+                                <span>Share</span>
+                            </button>
+                        </div>
+
+                        <div class="share-options" id="shareOptions">
+                            <p>Share this song</p>
+                            <div class="share-buttons">
+                                <button class="share-btn telegram" onclick="shareToTelegram()">Telegram</button>
+                                <button class="share-btn whatsapp" onclick="shareToWhatsApp()">WhatsApp</button>
+                                <button class="share-btn copy" onclick="copyLink()">Copy Link</button>
+                            </div>
+                        </div>
+
+                        <button class="download-btn" id="downloadBtn">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            <span id="downloadText">Download Now</span>
+                        </button>
+
+                        <div class="download-info" id="downloadInfo" style="display: none;">
+                            Please wait while we prepare your download...
+                        </div>
+                    </div>
+
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchTab('download')">Download Info</button>
+                        <button class="tab" onclick="switchTab('how')">How to Use</button>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="tab-panel active" id="downloadTab">
+                            <h3>Download Information</h3>
+                            <ul>
+                                <li>High quality MP3 format (320kbps)</li>
+                                <li>Instant download after countdown</li>
+                                <li>No registration required</li>
+                                <li>Free and safe download</li>
+                                <li>Compatible with all devices</li>
+                            </ul>
+                        </div>
+                        <div class="tab-panel" id="howTab">
+                            <h3>How to Use Telegram Bot</h3>
+                            <ol>
+                                <li>Open Telegram and find our bot</li>
+                                <li>Send the song name or artist</li>
+                                <li>Bot will send you a download link</li>
+                                <li>Click the link to visit this page</li>
+                                <li>Click download and enjoy your music!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trending Section -->
+                <div class="trending-section">
+                    <div class="trending-header">
+                        <svg class="trending-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                        <span>Trending Downloads</span>
+                    </div>
+                    <div class="trending-item">
+                        <div class="trending-art">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                        </div>
+                        <div class="trending-info">
+                            <div class="trending-name">Blinding Lights - The Weeknd</div>
+                        </div>
+                        <svg width="16" height="16" fill="none" stroke="#ba68c8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                    </div>
+                    <div class="trending-item">
+                        <div class="trending-art">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                        </div>
+                        <div class="trending-info">
+                            <div class="trending-name">Shape of You - Ed Sheeran</div>
+                        </div>
+                        <svg width="16" height="16" fill="none" stroke="#ba68c8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                    </div>
+                    <div class="trending-item">
+                        <div class="trending-art">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                        </div>
+                        <div class="trending-info">
+                            <div class="trending-name">Levitating - Dua Lipa</div>
+                        </div>
+                        <svg width="16" height="16" fill="none" stroke="#ba68c8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Bottom Ad -->
+                <div class="bottom-ad">
+                    <p class="ad-label">Advertisement</p>
+                    <div class="bottom-ad-content">468 x 60 Banner Ad Space</div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar Ad -->
+            <div class="sidebar-ad">
+                <p class="ad-label">Advertisement</p>
+                <div class="sidebar-ad-content">300 x 600<br>Sidebar Ad</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Feel the Music. All rights reserved.</p>
+        <p>Powered by Telegram Bot • Free Music Downloads</p>
+    </footer>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const songName = urlParams.get('song') || 'Amazing Song';
+        const artist = urlParams.get('artist') || 'Artist Name';
+        const downloadUrl = urlParams.get('url') || '#';
+        const duration = urlParams.get('duration') || '3:45';
+        const album = urlParams.get('album') || 'Single';
+
+        // Set song info
+        document.getElementById('songTitle').textContent = songName;
+        document.getElementById('artistName').textContent = artist;
+        document.getElementById('duration').textContent = duration;
+        document.getElementById('album').textContent = album;
+
+        // State
+        let liked = false;
+        let downloading = false;
+        let countdown = 5;
+        let countdownInterval = null;
+
+        // Like button
+        document.getElementById('likeBtn').addEventListener('click', function() {
+            liked = !liked;
+            const btn = this;
+            const text = document.getElementById('likeText');
+            
+            if (liked) {
+                btn.classList.add('liked');
+                text.textContent = 'Liked';
+            } else {
+                btn.classList.remove('liked');
+                text.textContent = 'Like';
+            }
+        });
+
+        // Share button
+        document.getElementById('shareBtn').addEventListener('click', function() {
+            const shareOptions = document.getElementById('shareOptions');
+            shareOptions.classList.toggle('active');
+        });
+
+        // Share functions
+        function shareToTelegram() {
+            const text = `Check out ${songName} by ${artist}`;
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://t.me/share/url?url=${url}&text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function shareToWhatsApp() {
+            const text = `Check out ${songName} by ${artist} - ${window.location.href}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                alert('Link copied to clipboard!');
+            }, function() {
+                alert('Failed to copy link');
+            });
+        }
+
+        // Tab switching
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            const panels = document.querySelectorAll('.tab-panel');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            panels.forEach(p => p.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            
+            if (tab === 'download') {
+                document.getElementById('downloadTab').classList.add('active');
+            } else {
+                document.getElementById('howTab').classList.add('active');
+            }
+        }
+
+        // Download button
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            if (downloading) return;
+            
+            downloading = true;
+            countdown = 5;
+            
+            const btn = this;
+            const btnText = document.getElementById('downloadText');
+            const downloadInfo = document.getElementById('downloadInfo');
+            
+            downloadInfo.style.display = 'block';
+            btn.disabled = true;
+            
+            // Update button with countdown
+            countdownInterval = setInterval(function() {
+                    if (countdown > 0) {
+                    btnText.innerHTML = `Download starts in ${countdown}s`;
+                    btn.innerHTML = `
+                        <svg class="spinner" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        <span>Download starts in ${countdown}s</span>
+                    `;
+                    countdown--;
+                } else {
+                    clearInterval(countdownInterval);
+                    
+                    // Trigger download
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = `${songName} - ${artist}.mp3`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Show success
+                    btn.classList.add('success');
+                    btn.innerHTML = `
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Downloaded Successfully!</span>
+                    `;
+                    downloadInfo.style.display = 'none';
+                    downloading = false;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
